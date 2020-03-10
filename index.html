@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>yt downloader</title>
+	</head>
+	<body>
+    <div id="main">
+      <input id="url" type="text"></input>
+      <button id="download">send</button>
+    </div>
+
+    <div id="progress" style="display: none;">
+      downloading.....
+    </div>
+    
+	</body>
+	<script>
+  
+    const { ipcRenderer } = require('electron')
+
+		document.getElementById('download').addEventListener('click',() => {
+      ipcRenderer.send('download', document.getElementById('url').value)
+
+      document.getElementById('main').style.display = 'none';
+      document.getElementById('progress').style.display = 'block';
+
+    })
+    
+    ipcRenderer.on('done', () => {
+      document.getElementById('main').style.display = 'block';
+      document.getElementById('progress').style.display = 'none';
+    })
+   
+		
+	</script>
+</html>
