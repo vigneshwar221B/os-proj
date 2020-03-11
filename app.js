@@ -33,6 +33,8 @@ function createWindow() {
 app.whenReady().then(createWindow)
 
 ipcMain.on('download', (e, data) => {
+	console.log('download started')
+
 	runPy(data)
 		.then(res => {
 			if (res.toString().trim() == 'done') {

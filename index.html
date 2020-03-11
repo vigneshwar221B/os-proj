@@ -1,38 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta charset="UTF-8" />
+    <meta charset="UTF-8" />
+   <link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,700i,900,900i&display=swap" rel="stylesheet">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>yt downloader</title>
+    <title>yt downloader</title>
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <script>
+      window.addEventListener("DOMContentLoaded",()=>{
+      const { ipcRenderer } = require('electron')
+
+      function cancel(){
+        document.getElementById("main").style.display = "block";
+        document.getElementById("loader").style.display = "none";
+        document.getElementById('url').value = ''
+      }
+  
+      document.getElementById('download').addEventListener('click',() => {
+        ipcRenderer.send('download', document.getElementById('url').value)
+        document.getElementById("main").style.display = "none";
+        document.getElementById("loader").style.display = "block";
+    })
+      document.getElementById("cancel").addEventListener("click",cancel);
+
+      ipcRenderer.on('done', cancel);
+      })
+          
+    </script>
 	</head>
 	<body>
+    <div id="particles-js"></div>
     <div id="main">
-      <input id="url" type="text"></input>
-      <button id="download">send</button>
+      <div class="title left-app">
+        YT DOWNLOADER
+        <div class="shadow first">YT DOWNLOADER</div>
+        <div class="shadow second">YT DOWNLOADER</div>
+        <div class="shadow third">YT DOWNLOADER</div>
+        <div class="shadow fourth">YT DOWNLOADER</div>
+      </div>
+      <div class="neon-input left-app">
+        <div class="main-grad"></div>
+        <span class="first"></span>
+        <span class="second"></span>
+        <span class="third"></span>
+        <span class="fourth"></span>
+        <input id="url" type="text" placeholder="URL"></input>
+      </div>
+      <div class="neon-btn left-app" >
+        <button  class="grad-btn" id="download">Download</button>
+        <div class="main-grad"></div>
+        <span class="first"></span>
+        <span class="second"></span>
+        <span class="third"></span>
+        <span class="fourth"></span>
+      </div>
     </div>
 
-    <div id="progress" style="display: none;">
-      downloading.....
+  <div id="loader" style="display: none;">
+      <div class="title2 scale-up">
+        DOWNLOADING...
+        <div class="shadow first">DOWNLOADING...</div>
+        <div class="shadow second">DOWNLOADING...</div>
+        <div class="shadow third">DOWNLOADING...</div>
+        <div class="shadow fourth">DOWNLOADING...</div>
+      </div>
+      <div id="progress" class="scale-up">
+        <div class="center"></div>
+        <span class="first"></span>
+        <span class="second"></span>
+        <span class="third"></span>
+        <span class="fourth"></span>
+        <div class="load-grad"></div>
+      </div>
+      <div class="neon-btn scale-up" style="margin-top: 70px;">
+        <button  class="grad-btn" id="cancel">Cancel</button>
+        <div class="main-grad"></div>
+        <span class="first"></span>
+        <span class="second"></span>
+        <span class="third"></span>
+        <span class="fourth"></span>
+      </div>
     </div>
+    
     
 	</body>
-	<script>
   
-    const { ipcRenderer } = require('electron')
-
-		document.getElementById('download').addEventListener('click',() => {
-      ipcRenderer.send('download', document.getElementById('url').value)
-
-      document.getElementById('main').style.display = 'none';
-      document.getElementById('progress').style.display = 'block';
-
-    })
-    
-    ipcRenderer.on('done', () => {
-      document.getElementById('main').style.display = 'block';
-      document.getElementById('progress').style.display = 'none';
-    })
-   
-		
-	</script>
 </html>
